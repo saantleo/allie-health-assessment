@@ -5,9 +5,10 @@ import CreateForm from "./CreateForm";
 type Props = {
   open: boolean;
   handleClose: () => void;
+  handleSubmit: () => void;
 };
 
-const CreateUserModal = ({ open, handleClose }: Props) => {
+const CreateUserModal = ({ open, handleClose, handleSubmit }: Props) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -22,7 +23,7 @@ const CreateUserModal = ({ open, handleClose }: Props) => {
           p: 4,
         }}
       >
-        <CreateForm onSubmit={handleClose} />
+        <CreateForm onSubmit={handleSubmit} />
       </Box>
     </Modal>
   );

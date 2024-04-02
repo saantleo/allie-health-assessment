@@ -32,6 +32,15 @@ const Home = () => {
     );
   }
 
+  const handleCreateNewUser = () => {
+    refetch();
+    handleCloseCreateUserModal()
+  }
+
+  const handleCloseCreateUserModal = () => {
+    setIsCreateUserOpen((prev) => !prev);
+  }
+
   return (
     <>
       <Box
@@ -50,7 +59,8 @@ const Home = () => {
       <UsersTable users={data.users} />
       <CreateUserModal
         open={isCreateUserOpen}
-        handleClose={() => setIsCreateUserOpen(!isCreateUserOpen)}
+        handleSubmit={() => handleCreateNewUser()}
+        handleClose={() => handleCloseCreateUserModal()}
       />
     </>
   );
