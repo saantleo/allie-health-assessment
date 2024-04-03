@@ -11,6 +11,9 @@ const Home = () => {
 
   const [{ data, loading, error }, refetch] = useAxios(
     `${process.env.REACT_APP_SERVER_BASE_URL}/users`,
+    {
+      useCache: false,
+    },
   );
 
   if (loading) {
@@ -32,6 +35,15 @@ const Home = () => {
     );
   }
 
+  const handleCreateNewUser = () => {
+    refetch();
+    handleCloseCreateUserModal();
+  };
+
+  const handleCloseCreateUserModal = () => {
+    setIsCreateUserOpen((prev) => !prev);
+  };
+
   return (
     <>
       <Box
@@ -50,7 +62,8 @@ const Home = () => {
       <UsersTable users={data.users} />
       <CreateUserModal
         open={isCreateUserOpen}
-        handleClose={() => setIsCreateUserOpen(!isCreateUserOpen)}
+        handleSubmit={() => handleCreateNewUser()}
+        handleClose={() => handleCloseCreateUserModal()}
       />
     </>
   );

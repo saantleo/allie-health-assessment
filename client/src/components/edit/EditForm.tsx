@@ -1,26 +1,30 @@
-import { Alert, Box, Button, TextField } from "@mui/material";
-import useAxios from "axios-hooks";
 import { FieldValues, useForm } from "react-hook-form";
 import { User } from "../../models/User";
+import useAxios from "axios-hooks";
+import { Alert, Box, Button, TextField } from "@mui/material";
 
-type Props = {
+interface Props {
+  user: User;
   onSubmit: () => void;
-};
+}
 
-const CreateForm = ({ onSubmit }: Props) => {
-  const { register, handleSubmit } = useForm<User>();
-  const [{ loading, error }, executePost] = useAxios(
+const EditForm = ({ user, onSubmit }: Props) => {
+  const { register, handleSubmit } = useForm<User>({
+    values: user,
+  });
+
+  const [{ loading, error }, executePut] = useAxios(
     {
-      url: `${process.env.REACT_APP_SERVER_BASE_URL}/users`,
-      method: "POST",
+      url: `${process.env.REACT_APP_SERVER_BASE_URL}/user/${user.id}`,
+      method: "PUT",
     },
     { manual: true },
   );
 
   const onFormSubmit = async (data: FieldValues) => {
-    const response = await executePost({ data });
+    const response = await executePut({ data });
 
-    if (response?.data?.id) {
+    if (response?.data?.rowsAffected) {
       onSubmit();
     }
   };
@@ -37,7 +41,7 @@ const CreateForm = ({ onSubmit }: Props) => {
         >
           {error && (
             <Alert severity="error">
-              Sorry - there was an error creating the user
+              Sorry - there was an error updating the user
             </Alert>
           )}
           <TextField
@@ -59,7 +63,7 @@ const CreateForm = ({ onSubmit }: Props) => {
             {...register("birthday")}
           />
           <Button variant="contained" type="submit" disabled={loading}>
-            Create User
+            Update User
           </Button>
         </Box>
       </form>
@@ -67,4 +71,4 @@ const CreateForm = ({ onSubmit }: Props) => {
   );
 };
 
-export default CreateForm;
+export default EditForm;
