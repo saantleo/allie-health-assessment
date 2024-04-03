@@ -1,13 +1,14 @@
 import { Alert, Box, Button, TextField } from "@mui/material";
 import useAxios from "axios-hooks";
 import { FieldValues, useForm } from "react-hook-form";
+import { User } from "../../models/User";
 
 type Props = {
   onSubmit: () => void;
 };
 
 const CreateForm = ({ onSubmit }: Props) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<User>();
   const [{ loading, error }, executePost] = useAxios(
     {
       url: `${process.env.REACT_APP_SERVER_BASE_URL}/users`,
@@ -17,8 +18,11 @@ const CreateForm = ({ onSubmit }: Props) => {
   );
 
   const onFormSubmit = async (data: FieldValues) => {
-    await executePost({ data });
-    onSubmit();
+    const response = await executePost({ data });
+
+    if (response?.data?.id) {
+      onSubmit();
+    }
   };
 
   return (
@@ -47,6 +51,7 @@ const CreateForm = ({ onSubmit }: Props) => {
             {...register("lastName")}
           />
           <TextField label="Email" variant="outlined" {...register("email")} />
+          <TextField type="date" label="Birthday" variant="outlined" {...register("birthday")} />
           <Button variant="contained" type="submit" disabled={loading}>
             Create User
           </Button>
