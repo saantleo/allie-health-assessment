@@ -8,7 +8,11 @@ const router = Router();
 const upload = multer({ dest: os.tmpdir() });
 
 router.get("/users", (req: Request, res: Response) => {
-  const users = db.prepare("SELECT first_name as firstName, last_name as lastName, * FROM users").all();
+  const users = db
+    .prepare(
+      "SELECT first_name as firstName, last_name as lastName, * FROM users",
+    )
+    .all();
 
   res.json({
     users: users,
@@ -20,15 +24,19 @@ router.get("/user/:id", (req: Request, res: Response) => {
 
   if (!id) {
     res.sendStatus(400);
-    return
+    return;
   }
 
-  const user = db.prepare("SELECT first_name as firstName, last_name as lastName, * FROM users where id = @id").get({
-    id
-  });
+  const user = db
+    .prepare(
+      "SELECT first_name as firstName, last_name as lastName, * FROM users where id = @id",
+    )
+    .get({
+      id,
+    });
 
   res.json({
-    user
+    user,
   });
 });
 
@@ -59,11 +67,11 @@ router.put("/user/:id", (req: Request, res: Response) => {
 
   if (!id) {
     res.sendStatus(400);
-    return
+    return;
   }
 
   const userExists = db.prepare("SELECT id FROM users where id = @id").get({
-    id
+    id,
   });
 
   if (!userExists) {
@@ -73,7 +81,7 @@ router.put("/user/:id", (req: Request, res: Response) => {
 
   const user = db
     .prepare(
-      "UPDATE users SET (first_name, last_name, email, birthday) = (@firstName, @lastName, @email, @birthday) where id = @id"
+      "UPDATE users SET (first_name, last_name, email, birthday) = (@firstName, @lastName, @email, @birthday) where id = @id",
     )
     .run({
       id,
@@ -86,8 +94,7 @@ router.put("/user/:id", (req: Request, res: Response) => {
   res.json({
     rowsAffected: user.changes,
   });
-
-})
+});
 
 router.post(
   "/users/bulk",
