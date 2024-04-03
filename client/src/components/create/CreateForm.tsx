@@ -17,8 +17,11 @@ const CreateForm = ({ onSubmit }: Props) => {
   );
 
   const onFormSubmit = async (data: FieldValues) => {
-    await executePost({ data });
-    onSubmit();
+    const response = await executePost({ data });
+
+    if (response?.data?.id) {
+      onSubmit();
+    }
   };
 
   return (
