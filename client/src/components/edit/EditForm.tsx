@@ -9,7 +9,6 @@ interface Props {
 }
 
 const EditForm = ({ user, onSubmit }: Props) => {
-
   const { register, handleSubmit } = useForm<User>({
     values: user,
   });
@@ -56,7 +55,12 @@ const EditForm = ({ user, onSubmit }: Props) => {
             {...register("lastName")}
           />
           <TextField label="Email" variant="outlined" {...register("email")} />
-          <TextField type="date" label="Birthday" variant="outlined" {...register("birthday")} />
+          <TextField
+            type="date"
+            label="Birthday"
+            variant="outlined"
+            {...register("birthday")}
+          />
           <Button variant="contained" type="submit" disabled={loading}>
             Update User
           </Button>
@@ -64,6 +68,6 @@ const EditForm = ({ user, onSubmit }: Props) => {
       </form>
     </>
   );
-}
+};
 
 export default EditForm;

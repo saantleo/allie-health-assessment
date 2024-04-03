@@ -5,7 +5,6 @@ import EditForm from "./EditForm";
 import MessageContainer from "../home/MessageContainer";
 
 const EditUserPage = () => {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -33,8 +32,8 @@ const EditUserPage = () => {
   }
 
   const handleOnSubmit = () => {
-    navigate('/', { replace: true })
-  }
+    navigate("/", { replace: true });
+  };
 
   return (
     <>
@@ -48,13 +47,10 @@ const EditUserPage = () => {
         }}
       >
         <h1>User page</h1>
-        <EditForm
-          user={data.user}
-          onSubmit={handleOnSubmit}
-        />
+        <EditForm user={data.user} onSubmit={handleOnSubmit} />
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default EditUserPage;

@@ -51,7 +51,12 @@ const CreateForm = ({ onSubmit }: Props) => {
             {...register("lastName")}
           />
           <TextField label="Email" variant="outlined" {...register("email")} />
-          <TextField type="date" label="Birthday" variant="outlined" {...register("birthday")} />
+          <TextField
+            type="date"
+            label="Birthday"
+            variant="outlined"
+            {...register("birthday")}
+          />
           <Button variant="contained" type="submit" disabled={loading}>
             Create User
           </Button>

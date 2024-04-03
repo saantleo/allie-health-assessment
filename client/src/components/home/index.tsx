@@ -37,12 +37,12 @@ const Home = () => {
 
   const handleCreateNewUser = () => {
     refetch();
-    handleCloseCreateUserModal()
-  }
+    handleCloseCreateUserModal();
+  };
 
   const handleCloseCreateUserModal = () => {
     setIsCreateUserOpen((prev) => !prev);
-  }
+  };
 
   return (
     <>
