@@ -56,6 +56,7 @@ const EditForm = ({ user, onSubmit }: Props) => {
           />
           <TextField label="Email" variant="outlined" {...register("email")} />
           <TextField
+            InputLabelProps={{ shrink: true }}
             type="date"
             label="Birthday"
             variant="outlined"
