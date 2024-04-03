@@ -11,6 +11,9 @@ const Home = () => {
 
   const [{ data, loading, error }, refetch] = useAxios(
     `${process.env.REACT_APP_SERVER_BASE_URL}/users`,
+    {
+      useCache: false,
+    },
   );
 
   if (loading) {
